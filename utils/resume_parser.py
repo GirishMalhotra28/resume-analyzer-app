@@ -1,12 +1,17 @@
 import spacy
 from .cleaner import clean_resume_text  # ✅ Ensure cleaner.py exists and has clean_resume_text
 
-# ✅ Safe spaCy model loading with fallback
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    import en_core_web_sm
-    nlp = en_core_web_sm.load()
+import subprocess
+import importlib.util
+
+# Automatically download the model if not present
+model_name = "en_core_web_sm"
+if not importlib.util.find_spec(model_name):
+    subprocess.run(["python", "-m", "spacy", "download", model_name])
+
+# Now import
+import en_core_web_sm
+nlp = en_core_web_sm.load()
 
 # ✅ Define common skills for matching
 COMMON_SKILLS = {
