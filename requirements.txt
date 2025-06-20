@@ -1,6 +1,7 @@
 streamlit
 pdfplumber
 spacy>=3.7.1
+blis==0.7.11
 genai
 pandas
 scikit-learn
